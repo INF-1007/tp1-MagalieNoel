@@ -27,11 +27,47 @@ Prompts EXACTS :
 """
 
 # TODO: Importer math
+import math
+vitesseMarche = 5 #km/h
+vitesseVelo = 15 #km/h
+uneHeure = 60 #minutes
 
 # TODO: Lire les 4 valeurs
-
+try:
+    distance = float(input("Entrez la distance jusqu'au Parc Jean-Drapeau (en kilometres) : "))
+    attenteVelo = float(input("Entrez le temps d'attente pour un velo en libre-service (en minutes) : "))
+    trajetMetro = float(input("Entrez le temps du trajet en metro (en minutes) : "))
+    controle = float(input("Entrez le temps de controle a l'entree (en minutes) : "))
 # TODO: Validation
+    if distance < 0 or attenteVelo < 0 or trajetMetro < 0 or controle < 0:
+        raise ValueError
+    
+    # TODO: Calculer, arrondir (ceil) et determiner le(s) meilleur(s)
+    else: 
+        marche = math.ceil(distance * uneHeure / vitesseMarche + controle)
 
-# TODO: Calculer, arrondir (ceil) et determiner le(s) meilleur(s)
+        velo = math.ceil(attenteVelo + (distance * uneHeure) / vitesseVelo + controle)
 
-# TODO: Afficher la phrase exacte
+        metro = math.ceil(trajetMetro + controle)
+
+        minimum = min(marche, velo, metro)
+
+        options = []
+        if minimum == marche:
+            options.append("marcher")
+        if minimum == velo:
+            options.append("velo")
+        if minimum == metro:
+            options.append("metro")
+
+        # TODO: Afficher la phrase exacte
+        if len(options) == 1:
+            print(f"Option la plus rapide : {options[0]}.")
+        if len(options) == 2:
+            print(f"Egalite : {options[0]} et {options[1]}.")
+        if len(options) == 3:
+            print(f"Egalite : {options[0]}, {options[1]} et {options[2]}.")
+
+except ValueError:
+    print("Erreur - donnees invalides.")
+
