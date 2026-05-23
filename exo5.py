@@ -36,9 +36,40 @@ Conseil :
 """
 
 # TODO: Lire n (int) et statut (str)
+try:
+    n = int(input("Entrez le nombre de billets necessaires : "))
+    statut = input("Entrez le statut benevole (O/N) : ")
+    # TODO: Validation (n >= 0 et statut dans {O, N})
+    if n < 0:
+        raise ValueError
+    possibilites = ["O", "N"]
+    if possibilites[0] != statut and possibilites[1] != statut:
+        raise ValueError
+    # TODO: Chercher la meilleure combinaison (A, B, C, D)
+    t=n
+    a = n // 20
+    n %= 20
+    
+    b = n // 10
+    n %= 10
 
-# TODO: Validation (n >= 0 et statut dans {O, N})
+    c = n // 4
+    n %= 4
 
-# TODO: Chercher la meilleure combinaison (A, B, C, D)
+    d= n
 
 # TODO: Calculer et afficher le resultat exact (6 lignes)
+    
+    prix = a * 80 + b * 44 + c * 18 + d * 5
+    if statut == possibilites[0]:
+        prix = 0.9*(a * 80 + b * 44 + c * 18) + d * 5
+    print(f"Forfaits de 20 journees - {a}")
+    print(f"Forfaits de 10 journees - {b}")
+    print(f"Forfaits de 4 journees - {c}")
+    print(f"Billets journaliers - {d}")
+    print(f"Total billets - {t}")
+    print(f"Prix total - {prix:02.2f}$")
+
+except ValueError:
+    print("Erreur - donnees invalides.")
+

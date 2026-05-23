@@ -23,11 +23,40 @@ Prompts EXACTS a utiliser :
 """
 
 # TODO: Lire le nom (str)
+nom = input("Entrez votre nom complet : ")
 
 # TODO: Lire les 4 valeurs (int)
-
+try:
+    nbElectronique = int(input("Entrez le nombre de spectacles electroniques assistes au festival : "))
+    dureeElec = int(input("Entrez la duree moyenne d'un spectacle electronique (en minutes) : "))
+    nbLive = int(input("Entrez le nombre de spectacles live assistes au festival : "))
+    dureeLive = int(input("Entrez la duree moyenne d'un spectacle live (en minutes) : "))
+except ValueError:
+    print("Erreur - donnees invalides.")
 # TODO: Valider les donnees (spectacles >= 0, durees > 0)
+if nbElectronique < 0 or nbLive < 0:
+    print("Erreur - donnees invalides.")
+elif dureeElec <= 0 or dureeLive <= 0:
+    print("Erreur - donnees invalides.")
 
 # TODO: Calculer les minutes totales (electronique, live, total)
+else:
+    #electronique
+    totalElecMin = nbElectronique * dureeElec 
+    #live
+    totalLiveMin = nbLive * dureeLive    
+    #total
+    grandTotal = totalElecMin + totalLiveMin  
 
-# TODO: Convertir en heures/minutes et afficher exactement 4 lignes
+    # TODO: Convertir en heures/minutes et afficher exactement 4 lignes
+    #electronique
+    heuresElec = totalElecMin // 60
+    minutesElec = totalElecMin % 60
+    #Live
+    heuresLive = totalLiveMin // 60
+    minutesLive = totalLiveMin % 60
+    #total
+    heuresTotal = grandTotal // 60
+    minutesTotal = grandTotal % 60
+
+    print(f"Bonjour {nom}\nElectronique: {nbElectronique} spectacle(s), {heuresElec}h{minutesElec:02d} d'ecoute\nLive: {nbLive} spectacle(s), {heuresLive}h{minutesLive:02d} d'ecoute\nTotal: {heuresTotal}h{minutesTotal:02d}")
