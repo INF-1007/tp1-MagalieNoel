@@ -46,29 +46,37 @@ try:
     if possibilites[0] != statut and possibilites[1] != statut:
         raise ValueError
     # TODO: Chercher la meilleure combinaison (A, B, C, D)
-    t=n
-    a = n // 20
-    n %= 20
-    
-    b = n // 10
-    n %= 10
+    essais = []
+    for i in range((n // 20) + 1):
+        for j in range((n //  10) + 1):
+            for k in range((n // 4) + 1):
+                for l in range (n + 1):
+                    nbBillets = 20 * i + 10 * j + 4 * k + l
+                    if nbBillets >= n:
+                        essaiPrix = i * 80 + j * 44 + k * 18 + l * 5
+                        if statut == possibilites[0]:
+                            essaiPrix = 0.9*(i * 80 + j * 44 + k * 18) + l * 5
+                        essaiInfos = [essaiPrix, i, j, k, l, nbBillets]
+                        essais.append(essaiInfos)
 
-    c = n // 4
-    n %= 4
-
-    d= n
+    meilleur = essais[0]
+    for essai in essais:
+        if essai[0] < meilleur[0]:
+                meilleur = essai
+        elif essai[0] == meilleur[0]:
+            if essai[-1] < meilleur[-1]:
+                meilleur = essai
+            elif essai[-1] ==  meilleur[-1]:
+                if essai[-2] < meilleur[-2]:
+                    meilleur = essai
 
 # TODO: Calculer et afficher le resultat exact (6 lignes)
-    
-    prix = a * 80 + b * 44 + c * 18 + d * 5
-    if statut == possibilites[0]:
-        prix = 0.9*(a * 80 + b * 44 + c * 18) + d * 5
-    print(f"Forfaits de 20 journees - {a}")
-    print(f"Forfaits de 10 journees - {b}")
-    print(f"Forfaits de 4 journees - {c}")
-    print(f"Billets journaliers - {d}")
-    print(f"Total billets - {t}")
-    print(f"Prix total - {prix:02.2f}$")
+    print(f"Forfaits de 20 journees - {meilleur[1]}")
+    print(f"Forfaits de 10 journees - {meilleur[2]}")
+    print(f"Forfaits de 4 journees - {meilleur[3]}")
+    print(f"Billets journaliers - {meilleur[4]}")
+    print(f"Total billets - {meilleur[-1]}")
+    print(f"Prix total - {meilleur[0]:02.2f}$")
 
 except ValueError:
     print("Erreur - donnees invalides.")
