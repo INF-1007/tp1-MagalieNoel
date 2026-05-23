@@ -22,9 +22,44 @@ FACTEURS = [1.20, 1.15, 1.05, 0.90, 0.90, 1.05, 1.15, 1.20]
 
 # TODO: Lire 8 entiers (un par ligne) dans une liste personnes
 #       En cas d'erreur de conversion ou valeur negative -> afficher le message d'erreur et quitter
-
+valeurs = []
+try:
+    for valeur in range(8):
+        valeur = int(input())
+        if valeur < 0:
+            raise ValueError
+        else:
+            valeurs.append(valeur)
+    intensiteBrutes = []
 # TODO: Calculer les intensites brutes (liste de 8 floats)
+    for i in range(8):
+        intensiteBrutes.append(valeurs[i] * FACTEURS[i])
+    # TODO: Calculer les niveaux normalises (liste de 8 entiers dans [0,10])
+    maxl = intensiteBrutes[0]
+    for intensiteBrute in intensiteBrutes:
+        if intensiteBrute > maxl:
+            maxl = intensiteBrute
+    niveaux = []
+    if maxl != 0:
+        for i in range(8):
+            niveaux.append(max(0, min((int((intensiteBrutes[i] / maxl) * 10 + 0.5), 10))))
+    # TODO: Afficher la grille (10 lignes) puis la ligne des labels
+    else:
+        for i in range(8):
+            niveaux.append(0)
+    output = ""
+    for i in range(10, 0, -1):
+        output += f"{(i):2d} |"
 
-# TODO: Calculer les niveaux normalises (liste de 8 entiers dans [0,10])
+        for j in range(8):
+            if(niveaux[j] >= i):
+                output += " ❚"
+            else:
+                output += " ."
+        output += "\n"
+    
+    output += "     P Q R S T U V W"
+    print(f"{output}")
+except ValueError:
+    print("Erreur - donnees invalides.")
 
-# TODO: Afficher la grille (10 lignes) puis la ligne des labels
